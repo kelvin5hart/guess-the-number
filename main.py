@@ -11,25 +11,35 @@
 import logo
 import random
 
-print(logo.logo)
-
-print("Welcome to the Number Guessing Game")
-
-print("I am guessing a number between 1 and 100")
-difficulty = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
-numberGuess = random.randint(1, 100)
+# Function to reduce player Life
 def lifeReduction (life):
   return life - 1
 
+# Function to compare the player guess (playerInput) with the random guessed number (computerGuess)
 def compare(playerInput, computerGuess):
   if playerInput > computerGuess:
     return print("Too High.")
   elif playerInput < computerGuess:
     return print("Too Low.")
 
-if difficulty == "easy":
-  playerLife = 10
+# Function to check the difficult of the game and return the amount of lives to play
+def checkingDifficulty (difficultLevel):
+  if difficultLevel == 'easy':
+    return 10
+  elif difficultLevel == 'hard':
+    return 5
+
+print(logo.logo)
+print("Welcome to the Number Guessing Game")
+
+
+def mainGame ():
+  print("I am guessing a number between 1 and 100")
+  difficulty = input("Choose a difficulty. Type 'easy' or 'hard': ").lower()
+  numberGuess = random.randint(1, 100)
+
   gameMode = True
+  playerLife = checkingDifficulty(difficulty)
   while gameMode == True:
     print(f"You have {playerLife} attempts remaining to guess the number")
     playerGuess = int(input("Make a guess: "))
@@ -37,7 +47,7 @@ if difficulty == "easy":
       compare(playerGuess, numberGuess)
       playerLife -= 1
       if playerLife == 0:
-        print("Game Over, You were unable to guess the number")
+        print(f"Game Over, You were unable to guess the number, the number was {numberGuess}")
         gameMode = False
       else:
         print("Guess Again.")
@@ -45,25 +55,7 @@ if difficulty == "easy":
       print(f"You have {playerLife} attempts remaining to guess the number")
       print(f"You are correct, the number is {numberGuess}")
       gameMode = False
-elif difficulty == "hard":
-  playerLife = 5
-  gameMode = True
-  while gameMode == True:
-    print(f"You have {playerLife} attempts remaining to guess the number")
-    playerGuess = int(input("Make a guess: "))
-    if playerGuess != numberGuess:
-      compare(playerGuess, numberGuess)
-      playerLife -= 1
-      if playerLife == 0:
-        print("Game Over, You were unable to guess the number")
-        gameMode = False
-      else:
-        print("Guess Again.")
-    elif playerGuess == numberGuess:
-      print(f"You have {playerLife} attempts remaining to guess the number")
-      print(f"You are correct, the number is {numberGuess}")
-      gameMode = False
-else:
-  print("Invalid Entry.")
+
+mainGame()
 
 
